@@ -2,6 +2,7 @@ package com.psayago.examentecnico.java_angular_tp.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -29,16 +30,20 @@ public class Factura implements Serializable {
 	@Column
 	private double total;
 	
+	@Column(name="FECHA")
+	private Date fecha;
+	
 	@OneToMany(mappedBy = "nroFactura")	
 	private List<Venta> ventas= new ArrayList<Venta>();
 
 	public Factura() {
 	}
 
-	public Factura(int nroFactura, Cliente idCliente, double total) {
+	public Factura(int nroFactura, Cliente idCliente, double total, Date fecha) {
 		this.nroFactura = nroFactura;
 		this.idCliente = idCliente;
 		this.total = total;
+		this.fecha = fecha;
 	}
 
 	public int getNroFactura() {
@@ -72,12 +77,24 @@ public class Factura implements Serializable {
 	public void setVentas(List<Venta> ventas) {
 		this.ventas = ventas;
 	}
+	
+	public Date getFecha() {
+		return fecha;
+	}
+	
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 
 	@Override
 	public String toString() {
-		return "Factura [nroFactura=" + nroFactura + ", idCliente=" + idCliente + ", total=" + total + ", ventas="
-				+ ventas + "]";
+		return "Factura [nroFactura=" + nroFactura 
+				+ ", idCliente=" + idCliente 
+				+ ", total=" + total 
+				+ ", fecha=" + fecha.toString() 
+				+ ", ventas=" + ventas + "]";
 	}
+
 	
 
 }
