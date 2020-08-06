@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.psayago.examentecnico.java_angular_tp.JPAUtil;
@@ -76,7 +77,7 @@ public class ControladorRest {
 	}
 	
 	@RequestMapping(value = "api/saveProducto", method = RequestMethod.POST)
-	public ResponseEntity<Producto> saveCliente(@RequestBody Producto producto) throws SQLException {
+	public ResponseEntity<Producto> saveProducto(@RequestBody Producto producto) throws SQLException {
 		
 		manager = JPAUtil.getEntityManagerFactory().createEntityManager();
 		
@@ -124,6 +125,27 @@ public class ControladorRest {
 
 	}
 	
+	@RequestMapping(value = "api/mostrarfactura", method = RequestMethod.GET)
+	private ResponseEntity<String> mostrarFactura(@RequestParam int id){
+		manager = JPAUtil.getEntityManagerFactory().createEntityManager();
+		logger.info("Generandoo la factura");
+		Factura factura = null;
+		try {
+			factura = manager.find(Factura.class, id);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		String facturaString = "-- NO EXISTE ESA FACTURA ---";
+		if (factura.getFecha() != null) {
+			facturaString = factura.toString();
+			System.out.println(facturaString);
+		}
+		new ResponseEntity<String>(HttpStatus.OK);
+		return ResponseEntity.ok(facturaString);
+		 
+	}
+	
 	private void guardarVenta(ProductoCompra item, Factura factura, EntityManager manager) {
 		
 		Producto producto = manager.find(Producto.class, item.getId());	
@@ -136,6 +158,7 @@ public class ControladorRest {
 		factura.getVentas().add(venta);
 		manager.persist(venta);
 	}
+	 
 	
 	
 
