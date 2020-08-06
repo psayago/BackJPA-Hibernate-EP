@@ -137,7 +137,7 @@ public class ControladorRest {
 			System.out.println(e.getMessage());
 		}
 		String facturaString = "-- NO EXISTE ESA FACTURA ---";
-		if (factura.getFecha() != null) {
+		if (factura != null) {
 			facturaString = factura.toString();
 			System.out.println(facturaString);
 		}
