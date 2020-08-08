@@ -7,7 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
+/**
+Este es el modelo que se asocia a la DB	
+**/
 @Entity
 @Table(name = "Clientes")
 @NamedQuery(name="Cliente.findAll", query="SELECT f FROM Cliente f")
